@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>jQuery Calculator</title>
+  <meta charset="UTF-8">
+  <title>jQuery Calculator</title>
 
-    <!-- Added link to the jQuery Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Added link to the jQuery Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <!-- Added a link to Bootstrap-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <!-- Added a link to Bootstrap-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-    <!-- Added a link to our external stylesheet-->
-    <link rel="stylesheet" href="style.css">
+  <!-- Added a link to our external stylesheet-->
+  <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
 
-<!-- Jumbotron for Title -->
-<div class="jumbotron">
+  <!-- Jumbotron for Title -->
+  <div class="jumbotron">
     <h1 class="text-center">jQuery Calculator</h1>
     <h3 class="text-center">Perform basic mathematic operations using the power of jQuery!</h3>
-</div>
+  </div>
 
-<div class="container">
+  <div class="container">
 
     <div class="row">
 
@@ -73,34 +75,71 @@
     </div>
   </div>
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-$(document).ready(function() {
-  
-  let firstNum = $("#first-number");
-  let secondNum = $("#second-number");
+    $(document).ready(function () {
 
-$(".number").on("click", function(e){
-  let numVal = ($(this).text());
-  console.log(numVal);
-});
-$(".operator").on("click", function(e){
-  let opVal = ($(this).text());
-  console.log(opVal);
-});
-$(".equal").on("click", function(e){
-  let eqVal = ($(this).text());
-  console.log("you clicked equal",eqVal);
-});
-$(".clear").on("click", function(e){
-  let clearVal = ($(this).text());
-  console.log("you clicked ", clearVal);
-});
+      let firstNum = $("#first-number");
+      let operator = $("#operator");
+      let secondNum = $("#second-number");
+      let equal = $("#result");
+      let hasOperator = false;
+      let opType = "";
+
+      $(".number").on("click", function (e) {
+        let numVal = ($(this).text());
+        if (!hasOperator) {
+          firstNum.text(firstNum.text() + numVal);
+        }
+        else {
+          secondNum.text(secondNum.text() + numVal);
+        }
+      });
 
 
-});
+      $(".operator").on("click", function (e) {
+        let opVal = ($(this).text());
+        hasOperator = true;
+        operator.text(opVal);
+        opType = $(this).val();
+      });
+      $(".equal").on("click", function (e) {
+        let eqVal = ($(this).text());
+        
+        let answer = doStuff(firstNum.text(),  opType ,secondNum.text());
+        console.log(answer);
+      });
+      $(".clear").on("click", function (e) {
+        let clearVal = ($(this).text());
+        console.log("you clicked ", clearVal);
+      });
+      function doStuff(firstNumber, specOp, secondNumber) {
+        
+        switch (specOp) {
+          // + - / ^ *
+          case "plus":
+            return parseInt(firstNumber) + parseInt(secondNumber);
+            break;
+          case "minus":
+          return parseInt(firstNumber) - parseInt(secondNumber);
+            break;
+            case "times":
+            return parseInt(firstNumber) * parseInt(secondNumber);
+            break;
+            case "divide":
+            return parseInt(firstNumber) / parseInt(secondNumber);
+            break;
+            case "power":
+            return parseInt(firstNumber) ** parseInt(secondNumber);
+            break;
+        
+        }
+      }
 
-</script>
+    });
+
+  </script>
 
 </body>
+
 </html>
