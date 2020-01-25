@@ -85,11 +85,13 @@
       let equal = $("#result");
       let hasOperator = false;
       let opType = "";
+      let hasNumber = false;
 
       $(".number").on("click", function (e) {
         let numVal = ($(this).text());
         if (!hasOperator) {
           firstNum.text(firstNum.text() + numVal);
+          hasNumber = true;
         }
         else {
           secondNum.text(secondNum.text() + numVal);
@@ -99,9 +101,11 @@
 
       $(".operator").on("click", function (e) {
         let opVal = ($(this).text());
-        hasOperator = true;
-        operator.text(opVal);
-        opType = $(this).val();
+        if (hasNumber) {
+          operator.text(opVal);
+          opType = $(this).val();
+          hasOperator = true;
+          }
       });
       $(".equal").on("click", function (e) {
         let eqVal = ($(this).text());
@@ -116,6 +120,7 @@
         secondNum.text("");
         equal.text("");
         hasOperator = false;
+        hasNumber = false;
       });
       function doStuff(firstNumber, specOp, secondNumber) { 
         switch (specOp) {
