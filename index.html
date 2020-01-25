@@ -54,7 +54,7 @@
             <button id="button-power" class="btn btn-danger operator" value="power"><span>^</span></button>
             <button id="button-equal" class="btn btn-success equal" value="equals"><span>=</span></button>
             <br><br>
-            <button  id="button-clear" class="btn btn-dark clear" value="clear"><span>clear</span></button>
+            <button id="button-clear" class="btn btn-dark clear" value="clear"><span>clear</span></button>
           </div>
         </div>
       </div>
@@ -78,7 +78,7 @@
   <script type="text/javascript">
 
     $(document).ready(function () {
-
+      //creating the global variables
       let firstNum = $("#first-number");
       let operator = $("#operator");
       let secondNum = $("#second-number");
@@ -86,34 +86,41 @@
       let hasOperator = false;
       let opType = "";
       let hasNumber = false;
-
+      //number entry
       $(".number").on("click", function (e) {
         let numVal = ($(this).text());
+        //if there isn't an operator, put number value in first number place
         if (!hasOperator) {
           firstNum.text(firstNum.text() + numVal);
           hasNumber = true;
         }
+        // if there is a operator put number value in second place
         else {
           secondNum.text(secondNum.text() + numVal);
         }
       });
 
-
+      //operator entry
       $(".operator").on("click", function (e) {
         let opVal = ($(this).text());
+        //if there is a number, you can enter a operator
         if (hasNumber) {
           operator.text(opVal);
+          //making the operator string character to its value
           opType = $(this).val();
           hasOperator = true;
-          }
+        }
       });
+      //equal event
       $(".equal").on("click", function (e) {
         let eqVal = ($(this).text());
-        
-        let answer = doStuff(firstNum.text(),  opType ,secondNum.text());
+        //where answer is defined
+        let answer = doStuff(firstNum.text(), opType, secondNum.text());
         equal.text(answer);
       });
+      //clear event
       $(".clear").on("click", function (e) {
+        //returns everything back to its original 
         let clearVal = ($(this).text());
         firstNum.text("");
         operator.text("");
@@ -122,30 +129,31 @@
         hasOperator = false;
         hasNumber = false;
       });
-      function doStuff(firstNumber, specOp, secondNumber) { 
+      //the equation
+      function doStuff(firstNumber, specOp, secondNumber) {
         switch (specOp) {
-          // + - / ^ *
+          // operator values
           case "plus":
             return parseInt(firstNumber) + parseInt(secondNumber);
             break;
           case "minus":
-          return parseInt(firstNumber) - parseInt(secondNumber);
+            return parseInt(firstNumber) - parseInt(secondNumber);
             break;
-            case "times":
+          case "times":
             return parseInt(firstNumber) * parseInt(secondNumber);
             break;
-            case "divide":
-              if (secondNumber === "0"){
-                return "undefined";
-              }
-              else {
-            return parseInt(firstNumber) / parseInt(secondNumber);
-              }
+          case "divide":
+            if (secondNumber === "0") {
+              return "undefined";
+            }
+            else {
+              return parseInt(firstNumber) / parseInt(secondNumber);
+            }
             break;
-            case "power":
+          case "power":
             return parseInt(firstNumber) ** parseInt(secondNumber);
             break;
-        
+
         };
       };
 
