@@ -54,7 +54,7 @@
             <button id="button-power" class="btn btn-danger operator" value="power"><span>^</span></button>
             <button id="button-equal" class="btn btn-success equal" value="equals"><span>=</span></button>
             <br><br>
-            <button id="button-clear" class="btn btn-dark clear" value="clear"><span>clear</span></button>
+            <button  id="button-clear" class="btn btn-dark clear" value="clear"><span>clear</span></button>
           </div>
         </div>
       </div>
@@ -107,14 +107,17 @@
         let eqVal = ($(this).text());
         
         let answer = doStuff(firstNum.text(),  opType ,secondNum.text());
-        console.log(answer);
+        equal.text(answer);
       });
       $(".clear").on("click", function (e) {
         let clearVal = ($(this).text());
-        console.log("you clicked ", clearVal);
+        firstNum.text("");
+        operator.text("");
+        secondNum.text("");
+        equal.text("");
+        hasOperator = false;
       });
-      function doStuff(firstNumber, specOp, secondNumber) {
-        
+      function doStuff(firstNumber, specOp, secondNumber) { 
         switch (specOp) {
           // + - / ^ *
           case "plus":
@@ -127,14 +130,19 @@
             return parseInt(firstNumber) * parseInt(secondNumber);
             break;
             case "divide":
+              if (secondNumber === "0"){
+                return "undefined";
+              }
+              else {
             return parseInt(firstNumber) / parseInt(secondNumber);
+              }
             break;
             case "power":
             return parseInt(firstNumber) ** parseInt(secondNumber);
             break;
         
-        }
-      }
+        };
+      };
 
     });
 
